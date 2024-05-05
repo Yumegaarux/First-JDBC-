@@ -18,9 +18,7 @@ public class AddCar extends javax.swing.JFrame {
     public AddCar() {
         initComponents();
     }
-
-    
-    
+    Homepage hp = new Homepage();
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -78,6 +76,11 @@ public class AddCar extends javax.swing.JFrame {
         });
 
         btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -152,6 +155,10 @@ public class AddCar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public static void addInventory(){
+        
+    }
+    
     private void btnApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApplyActionPerformed
         try{
             Connector.connect();
@@ -160,17 +167,22 @@ public class AddCar extends javax.swing.JFrame {
             String carname = TFcarname.getText();
             int yrmodel = Integer.parseInt(TFcaryr.getText());
             
-            String sql = "INSERT INTO cars VALUES(?, ?, ?, ?, ?, NULL)";
-            PreparedStatement pstmt = Connector.con.prepareStatement(sql);
-            pstmt.setString(1, carplate); 
-            pstmt.setInt(2, CarRental.ID); 
-            pstmt.setString(3, carbrand);
-            pstmt.setString(4, carname);
-            pstmt.setInt(5, yrmodel);
+            String sql = "INSERT INTO cars VALUES(?, ?, ?, ?, ?, 'INACTIVE')";
+            Connector.pstmt = Connector.con.prepareStatement(sql);
+            Connector.pstmt.setString(1, carplate); 
+            Connector.pstmt.setInt(2, CarRental.ID); 
+            Connector.pstmt.setString(3, carbrand);
+            Connector.pstmt.setString(4, carname);
+            Connector.pstmt.setInt(5, yrmodel);
             
-            int rowsInserted = pstmt.executeUpdate();
+            int rowsInserted = Connector.pstmt.executeUpdate();
            
             if (rowsInserted > 0) {
+                hp.update();
+                TFcarplate.setText("");
+                TFcarbrand.setText("");
+                TFcarname.setText("");
+                TFcaryr.setText("");
                 JOptionPane.showMessageDialog(this, "Added to Inventory!");
             }
             else {
@@ -186,6 +198,11 @@ public class AddCar extends javax.swing.JFrame {
     private void TFcarplateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFcarplateActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TFcarplateActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        this.dispose();
+        hp.show();
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     /**
      * @param args the command line arguments
