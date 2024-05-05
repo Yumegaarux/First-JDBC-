@@ -167,7 +167,7 @@ public class AddCar extends javax.swing.JFrame {
             String carname = TFcarname.getText();
             int yrmodel = Integer.parseInt(TFcaryr.getText());
             
-            String sql = "INSERT INTO cars VALUES(?, ?, ?, ?, ?, 'INACTIVE')";
+            String sql = "INSERT INTO cars VALUES(?, ?, ?, ?, ?, 'INACTIVE')"; //Values with ? will be substituted by setString() method
             Connector.pstmt = Connector.con.prepareStatement(sql);
             Connector.pstmt.setString(1, carplate); 
             Connector.pstmt.setInt(2, CarRental.ID); 

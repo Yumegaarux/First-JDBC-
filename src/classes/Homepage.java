@@ -27,7 +27,7 @@ public class Homepage extends javax.swing.JFrame {
         int q, i, id;
         try{
             Connector.connect();
-            pstmt = con.prepareStatement("SELECT * FROM cars WHERE idusers = '"+CarRental.ID+"'");
+            pstmt = con.prepareStatement("SELECT * FROM cars WHERE idusers = '"+CarRental.ID+"'"); // SQL Statement to use
             rs = pstmt.executeQuery();
             ResultSetMetaData stData = rs.getMetaData();
             
