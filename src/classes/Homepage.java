@@ -21,12 +21,15 @@ public class Homepage extends javax.swing.JFrame {
      */
     public Homepage() {
         initComponents();
+        update();
+        Connector.connect(); // Now Connected to database.
+                            // Functions can be added here so the moment the window is opened
+                           // The Functions are now called.
     }
 
     public void update(){
-        int q, i, id;
+        int q, i;
         try{
-            Connector.connect();
             pstmt = con.prepareStatement("SELECT * FROM cars WHERE idusers = '"+CarRental.ID+"'"); // SQL Statement to use
             rs = pstmt.executeQuery();
             ResultSetMetaData stData = rs.getMetaData();
@@ -36,10 +39,13 @@ public class Homepage extends javax.swing.JFrame {
             DefaultTableModel RecordTable = (DefaultTableModel)jTable1.getModel();
             RecordTable.setRowCount(0);
             
-            while(rs.next()){
+            while(rs.next()){ //rs.next() until the table is empty
                 Vector columnData = new Vector();
                 
                 for(i = 1 ; i <= q ; i++){
+                    
+                    // rs.getString is used to get column name from the table
+                    
                     columnData.add(rs.getString("carplate"));
                     columnData.add(rs.getString("carbrand"));
                     columnData.add(rs.getString("carname"));
@@ -64,18 +70,20 @@ public class Homepage extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        BTNadd = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        BTNaddtrans = new javax.swing.JButton();
+        BTNedit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jButton1.setText("Add Car");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        BTNadd.setText("Add Car");
+        BTNadd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                BTNaddActionPerformed(evt);
             }
         });
 
@@ -116,6 +124,15 @@ public class Homepage extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(4).setResizable(false);
         }
 
+        BTNaddtrans.setText("Add Transaction");
+        BTNaddtrans.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNaddtransActionPerformed(evt);
+            }
+        });
+
+        BTNedit.setText("Edit Car");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -123,14 +140,21 @@ public class Homepage extends javax.swing.JFrame {
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 772, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(BTNaddtrans)
+                .addGap(10, 10, 10)
+                .addComponent(BTNedit)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(BTNadd)
                 .addGap(3, 3, 3))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(178, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BTNadd)
+                    .addComponent(BTNaddtrans)
+                    .addComponent(BTNedit))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -155,17 +179,21 @@ public class Homepage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void BTNaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNaddActionPerformed
         this.dispose();
         AddCar ac = new AddCar();
         ac.show();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_BTNaddActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
 
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void BTNaddtransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNaddtransActionPerformed
+        this.dispose();
+        AddTransaction at = new AddTransaction();
+        at.show();
+    }//GEN-LAST:event_BTNaddtransActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,7 +231,9 @@ public class Homepage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton BTNadd;
+    private javax.swing.JButton BTNaddtrans;
+    private javax.swing.JButton BTNedit;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;

@@ -19,6 +19,10 @@ public class AddCar extends javax.swing.JFrame {
         initComponents();
     }
     Homepage hp = new Homepage();
+    public static String carplate;
+    public static String carbrand;
+    public static String carname;
+    public static int yrmodel;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -154,18 +158,14 @@ public class AddCar extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    public static void addInventory(){
-        
-    }
     
     private void btnApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApplyActionPerformed
         try{
             Connector.connect();
-            String carplate = TFcarplate.getText();
-            String carbrand = TFcarbrand.getText();
-            String carname = TFcarname.getText();
-            int yrmodel = Integer.parseInt(TFcaryr.getText());
+            carplate = TFcarplate.getText();
+            carbrand = TFcarbrand.getText();
+            carname = TFcarname.getText();
+            yrmodel = Integer.parseInt(TFcaryr.getText());
             
             String sql = "INSERT INTO cars VALUES(?, ?, ?, ?, ?, 'INACTIVE')"; //Values with ? will be substituted by setString() method
             Connector.pstmt = Connector.con.prepareStatement(sql);
@@ -178,7 +178,6 @@ public class AddCar extends javax.swing.JFrame {
             int rowsInserted = Connector.pstmt.executeUpdate();
            
             if (rowsInserted > 0) {
-                hp.update();
                 TFcarplate.setText("");
                 TFcarbrand.setText("");
                 TFcarname.setText("");
