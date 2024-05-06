@@ -34,6 +34,7 @@ public class CarRental extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         btnLog = new javax.swing.JButton();
         tfPass = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -47,6 +48,8 @@ public class CarRental extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("SysWiz Car Rental");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new java.awt.Dimension(400, 300));
         getContentPane().setLayout(null);
 
@@ -54,7 +57,7 @@ public class CarRental extends javax.swing.JFrame {
 
         jLabel1.setText("Username");
         jPanel3.add(jLabel1);
-        jLabel1.setBounds(30, 90, 60, 15);
+        jLabel1.setBounds(20, 90, 70, 15);
 
         tfUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,7 +69,7 @@ public class CarRental extends javax.swing.JFrame {
 
         jLabel2.setText("Password");
         jPanel3.add(jLabel2);
-        jLabel2.setBounds(30, 160, 50, 15);
+        jLabel2.setBounds(20, 160, 60, 15);
 
         btnLog.setText("Log-in");
         btnLog.addActionListener(new java.awt.event.ActionListener() {
@@ -79,10 +82,16 @@ public class CarRental extends javax.swing.JFrame {
         jPanel3.add(tfPass);
         tfPass.setBounds(90, 150, 270, 30);
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel3.setText("SysWiz Car Rental System");
+        jPanel3.add(jLabel3);
+        jLabel3.setBounds(20, 20, 320, 40);
+
         getContentPane().add(jPanel3);
         jPanel3.setBounds(0, 0, 400, 300);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUserActionPerformed
@@ -154,6 +163,7 @@ public class CarRental extends javax.swing.JFrame {
     private javax.swing.JButton btnLog;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPasswordField tfPass;
