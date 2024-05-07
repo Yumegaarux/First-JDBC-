@@ -21,10 +21,10 @@ public class Homepage extends javax.swing.JFrame {
      */
     public Homepage() {
         initComponents();
-        update();
-        Connector.connect(); // Now Connected to database.
-                            // Functions can be added here so the moment the window is opened
-                           // The Functions are now called.
+        Connector.connect();
+        update();           // Now Connected to database.
+                           // Functions can be added here so the moment the window is opened
+                          // The Functions are now called.
     }
 
     public void update(){

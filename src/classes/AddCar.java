@@ -17,6 +17,7 @@ public class AddCar extends javax.swing.JFrame {
      */
     public AddCar() {
         initComponents();
+        Connector.connect();
     }
     Homepage hp = new Homepage();
     public static String carplate;
@@ -162,7 +163,6 @@ public class AddCar extends javax.swing.JFrame {
     
     private void btnApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApplyActionPerformed
         try{
-            Connector.connect();
             carplate = TFcarplate.getText();
             carbrand = TFcarbrand.getText();
             carname = TFcarname.getText();
