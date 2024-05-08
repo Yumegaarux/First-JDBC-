@@ -1,22 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package classes;
-import static classes.AddCar.carbrand;
-import static classes.AddCar.carname;
-import static classes.AddCar.carplate;
-import static classes.AddCar.yrmodel;
 import java.sql.*;
 
-/**
- *
- * @author Toto
- */
 public class AddTransaction extends javax.swing.JFrame {
     public AddTransaction() {
         initComponents();
-        Connector.connect();
         updateCombo(); // DropBox is updated by function not by button
     }
     
@@ -145,17 +132,15 @@ public class AddTransaction extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    public void getCombo(){
-        
-    }
     private void DBcarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DBcarActionPerformed
               
     }//GEN-LAST:event_DBcarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-            try{
+        try{
+            Connector.connect();
+            
             dateRented = TFdaterented.getText();
             dateReturned = TFdatereturned.getText();
             payment = Double.parseDouble(TFpayment.getText());
@@ -164,17 +149,18 @@ public class AddTransaction extends javax.swing.JFrame {
             dropOff = TFdo.getText();
             customerName = TFcustname.getText();
             customerNum = TFcustnum.getText();
+           
+            // VL : Add a string statement here
             
-            String sql = "INSERT INTO transactions"+CarRental.ID+" VALUES(NULL, "+CarRental.ID+", ? , ? , ? , ? , ? , ? , ? , ?)";
-            Connector.pstmt = Connector.con.prepareStatement(sql);
-            Connector.pstmt.setString(1, dateRented); 
-            Connector.pstmt.setString(2, dateReturned); 
-            Connector.pstmt.setDouble(3, payment);
-            Connector.pstmt.setDouble(4, expense);
-            Connector.pstmt.setString(5, pickUp);
-            Connector.pstmt.setString(6, dropOff); 
-            Connector.pstmt.setString(7, customerName); 
-            Connector.pstmt.setString(8, customerNum);
+            PreparedStatement ps = Connector.con.prepareStatement("");
+            ps.setString(1, dateRented); 
+            ps.setString(2, dateReturned); 
+            ps.setDouble(3, payment);
+            ps.setDouble(4, expense);
+            ps.setString(5, pickUp);
+            ps.setString(6, dropOff); 
+            ps.setString(7, customerName); 
+            ps.setString(8, customerNum);
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
@@ -182,13 +168,14 @@ public class AddTransaction extends javax.swing.JFrame {
     
     private void updateCombo(){
         try{
-        String sql = "SELECT CONCAT(carplate,' ',carbrand,' ',carname,' ',yrmodel) AS concated FROM cars WHERE idusers='"+CarRental.ID+"'";
         
-        Connector.pstmt = Connector.con.prepareStatement(sql);
-        Connector.rs = Connector.pstmt.executeQuery(); 
+        //VL: Enter SQL statement here to update combobox.    
         
-        while(Connector.rs.next()){
-            DBcar.addItem(Connector.rs.getString("concated"));
+        PreparedStatement ps = Connector.con.prepareStatement("");
+        ResultSet rs = ps.executeQuery(); 
+        
+        while(rs.next()){
+            DBcar.addItem(rs.getString("concated"));
             // Used Concated so since you cannot manually concatinate
             // The columns here
         }

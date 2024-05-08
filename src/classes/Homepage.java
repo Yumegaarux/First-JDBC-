@@ -1,19 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package classes;
 import static classes.Connector.con;
-import static classes.Connector.pstmt;
-import static classes.Connector.rs;
 import java.sql.*;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Toto
- */
 public class Homepage extends javax.swing.JFrame {
 
     /**
@@ -21,17 +11,17 @@ public class Homepage extends javax.swing.JFrame {
      */
     public Homepage() {
         initComponents();
-        Connector.connect();
-        update();           // Now Connected to database.
+        update();           // Adding connector to the constructor is bad.
                            // Functions can be added here so the moment the window is opened
                           // The Functions are now called.
     }
 
     public void update(){
-        int q, i;
+        /** int q, i;
         try{
-            pstmt = con.prepareStatement("SELECT * FROM cars WHERE idusers = '"+CarRental.ID+"'"); // SQL Statement to use
-            rs = pstmt.executeQuery();
+            Connector.connect();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM cars WHERE idusers = '"+CarRental.ID+"'"); // SQL Statement to use
+            ResultSet rs = ps.executeQuery();
             ResultSetMetaData stData = rs.getMetaData();
             
             q = stData.getColumnCount();
@@ -55,10 +45,12 @@ public class Homepage extends javax.swing.JFrame {
                 RecordTable.addRow(columnData);
             }
             
+            Connector.close();
          }catch(SQLException e){
               System.out.println(e.getMessage());
          }
-    }
+         */ 
+    } 
     
     /**
      * This method is called from within the constructor to initialize the form.
