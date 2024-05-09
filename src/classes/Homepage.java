@@ -5,23 +5,26 @@ import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
 public class Homepage extends javax.swing.JFrame {
-
+    private final Users currentUser;
     /**
      * Creates new form Homepage
      */
-    public Homepage() {
+    public Homepage(Users currentUser) { //This allows the homepage to know the userID taken in the CarRental class.
+        this.currentUser = currentUser;
         initComponents();
-        update();           // Adding connector to the constructor is bad.
+        retrieveCars();           // Adding connector to the constructor is bad.
                            // Functions can be added here so the moment the window is opened
                           // The Functions are now called.
     }
-
-    public void update(){
-        /** int q, i;
+    
+    public Users getCurrentUser(){
+        return currentUser;
+    }
+    
+    public void retrieveCars(){
+        int q, i;
         try{
-            Connector.connect();
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM cars WHERE idusers = '"+CarRental.ID+"'"); // SQL Statement to use
-            ResultSet rs = ps.executeQuery();
+            ResultSet rs = Connector.retrieveCarsData(this.currentUser); // The rs is equal to the function 'retrieveCarsData'
             ResultSetMetaData stData = rs.getMetaData();
             
             q = stData.getColumnCount();
@@ -49,7 +52,6 @@ public class Homepage extends javax.swing.JFrame {
          }catch(SQLException e){
               System.out.println(e.getMessage());
          }
-         */ 
     } 
     
     /**
@@ -68,6 +70,8 @@ public class Homepage extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jPanel2 = new javax.swing.JPanel();
 
@@ -129,6 +133,21 @@ public class Homepage extends javax.swing.JFrame {
         }
 
         jTabbedPane1.addTab("Cars", jScrollPane2);
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable2);
+
+        jTabbedPane1.addTab("Transactions", jScrollPane1);
 
         jInternalFrame1.setVisible(true);
 
@@ -221,7 +240,7 @@ public class Homepage extends javax.swing.JFrame {
 
     private void BTNaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNaddActionPerformed
         this.dispose();
-        AddCar ac = new AddCar();
+        AddCar ac = new AddCar(this);
         ac.show();
     }//GEN-LAST:event_BTNaddActionPerformed
 
@@ -231,7 +250,7 @@ public class Homepage extends javax.swing.JFrame {
 
     private void BTNaddtransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNaddtransActionPerformed
         this.dispose();
-        AddTransaction at = new AddTransaction();
+        AddTransaction at = new AddTransaction(this);
         at.show();
     }//GEN-LAST:event_BTNaddtransActionPerformed
 
@@ -263,11 +282,6 @@ public class Homepage extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Homepage().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -277,8 +291,10 @@ public class Homepage extends javax.swing.JFrame {
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }

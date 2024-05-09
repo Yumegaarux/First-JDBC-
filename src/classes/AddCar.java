@@ -3,12 +3,12 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 
 public class AddCar extends javax.swing.JFrame {
-
-    public AddCar() {
+    private final Homepage hp;
+    public AddCar(Homepage hp) {
         initComponents();
+        this.hp = hp;
     }
-    Homepage hp = new Homepage();
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -142,17 +142,15 @@ public class AddCar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     private void btnApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApplyActionPerformed
-        /** try{
-            Connector.connect();
+        try{
             String carplate = TFcarplate.getText();
             String carbrand = TFcarbrand.getText();
             String carname = TFcarname.getText();
             int yrmodel = Integer.parseInt(TFcaryr.getText());
             
-
-            
-            // int rowsInserted = ps.executeUpdate(); 
-           
+            // hp.getCurrentUser().getID() allows us to know the currentUser we got from Homepage then later used the getID() to place the ID value 
+            int rowsInserted = Connector.addCar(carplate, carbrand, carname, yrmodel, hp.getCurrentUser().getID());
+               
             if (rowsInserted > 0) {
                 TFcarplate.setText("");
                 TFcarbrand.setText("");
@@ -163,11 +161,9 @@ public class AddCar extends javax.swing.JFrame {
             else {
                 JOptionPane.showMessageDialog(this, "Failed to add to Inventory!");
             }
-                
-            Connector.close();
-        }catch(SQLException e){
+        }catch(NumberFormatException e){
             System.out.println(e.getMessage());
-        } */
+        }
     }//GEN-LAST:event_btnApplyActionPerformed
 
     private void TFcarplateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFcarplateActionPerformed
@@ -176,6 +172,7 @@ public class AddCar extends javax.swing.JFrame {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.dispose();
+        hp.retrieveCars();
         hp.show();
     }//GEN-LAST:event_btnCancelActionPerformed
 
@@ -207,11 +204,6 @@ public class AddCar extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AddCar().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

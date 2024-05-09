@@ -82,7 +82,7 @@ public class CarRental extends javax.swing.JFrame {
     private void tfUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUserActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfUserActionPerformed
-
+    
     private void btnLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogActionPerformed
         try{
             Connector.connect();
@@ -92,8 +92,14 @@ public class CarRental extends javax.swing.JFrame {
             ResultSet rs = Connector.logUser(username, password);
             
             if(rs.next()){
+                int userID = rs.getInt("idusers"); 
+                Users currentUser = new Users();
+                currentUser.setID(userID);
+                currentUser.setUsername(username);
+                currentUser.setPassword(password);
+                
                 dispose();
-                Homepage hpage = new Homepage();
+                Homepage hpage = new Homepage(currentUser);
                 hpage.show();
                 
             }else{

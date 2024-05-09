@@ -1,22 +1,14 @@
 package classes;
 import java.sql.*;
+import javax.swing.JOptionPane;
 
 public class AddTransaction extends javax.swing.JFrame {
-    public AddTransaction() {
+    private Homepage hp;
+    public AddTransaction(Homepage hp) {
+        this.hp = hp;
         initComponents();
         updateCombo(); // DropBox is updated by function not by button
     }
-    
-    public static String dateRented;
-    public static String dateReturned;
-    public static double payment;
-    public static double expense;
-    public static double net;
-    public static String pickUp;
-    public static String dropOff;
-    public static String customerName;
-    public static String customerNum;
-    public static String car;
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -139,53 +131,56 @@ public class AddTransaction extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try{
-            Connector.connect();
+            String selectedCar = (String) DBcar.getSelectedItem();
+            String[] carDetails = selectedCar.split(" "); // Splits CONCAT by spaces
             
-            dateRented = TFdaterented.getText();
-            dateReturned = TFdatereturned.getText();
-            payment = Double.parseDouble(TFpayment.getText());
-            expense = Double.parseDouble(TFexpense.getText());
-            pickUp = TFpu.getText();
-            dropOff = TFdo.getText();
-            customerName = TFcustname.getText();
-            customerNum = TFcustnum.getText();
+            Car car = new Car();
+            car.setPlate(carDetails[0]);
+            car.setBrand(carDetails[1]);
+            car.setName(carDetails[2]);
+            car.setModel(Integer.parseInt(carDetails[3]));
+            
+            String dateRented = TFdaterented.getText();
+            String dateReturned = TFdatereturned.getText();
+            double payment = Double.parseDouble(TFpayment.getText());
+            double expense = Double.parseDouble(TFexpense.getText());
+            String pickUp = TFpu.getText();
+            String dropOff = TFdo.getText();
+            String customerName = TFcustname.getText();
+            String customerNum = TFcustnum.getText();
            
-            // VL : Add a string statement here
+            int rowsInserted = Connector.AddTransaction(hp.getCurrentUser().getID(), car.getPlate(), dateRented, dateReturned, payment, expense, pickUp, dropOff, customerName, customerNum);
             
-            PreparedStatement ps = Connector.con.prepareStatement("");
-            ps.setString(1, dateRented); 
-            ps.setString(2, dateReturned); 
-            ps.setDouble(3, payment);
-            ps.setDouble(4, expense);
-            ps.setString(5, pickUp);
-            ps.setString(6, dropOff); 
-            ps.setString(7, customerName); 
-            ps.setString(8, customerNum);
-        }catch(SQLException e){
+            if (rowsInserted > 0){
+                JOptionPane.showMessageDialog(this, "Transaction Added Successfully!");
+            }
+            
+            else{
+                JOptionPane.showMessageDialog(this, "Invalid Input");
+            }
+        }catch(NumberFormatException | ArrayIndexOutOfBoundsException e){ // Only one | for or.
             System.out.println(e.getMessage());
         }
+        // Used rowsInserted since this is going to be queried in a table
+       // Tables that are queried usually need to be int rather than just ResultSet
     }//GEN-LAST:event_jButton1ActionPerformed
     
     private void updateCombo(){
         try{
-        
-        //VL: Enter SQL statement here to update combobox.    
-        
-        PreparedStatement ps = Connector.con.prepareStatement("");
-        ResultSet rs = ps.executeQuery(); 
-        
-        while(rs.next()){
-            DBcar.addItem(rs.getString("concated"));
-            // Used Concated so since you cannot manually concatinate
-            // The columns here
-        }
+            ResultSet rs = Connector.comboUpdate(hp.getCurrentUser());
+            
+            while(rs.next()){
+                DBcar.addItem(rs.getString("concated"));
+                // Used Concated so since you cannot manually concatinate
+                // The columns here
+            }
         }catch(SQLException e){
             System.out.println(e.getMessage());
+        }finally{
+            Connector.close();
         }
     }
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -211,11 +206,6 @@ public class AddTransaction extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AddTransaction().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
