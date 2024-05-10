@@ -1,5 +1,4 @@
 package classes;
-import static classes.Connector.con;
 import java.sql.*;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
@@ -12,7 +11,9 @@ public class Homepage extends javax.swing.JFrame {
     public Homepage(Users currentUser) { //This allows the homepage to know the userID taken in the CarRental class.
         this.currentUser = currentUser;
         initComponents();
-        retrieveCars();           // Adding connector to the constructor is bad.
+        retrieveCars();           
+        retrieveTransactions();
+                            // Adding connector to the constructor is bad.
                            // Functions can be added here so the moment the window is opened
                           // The Functions are now called.
     }
@@ -54,6 +55,43 @@ public class Homepage extends javax.swing.JFrame {
          }
     } 
     
+    public void retrieveTransactions(){
+        int q, i;
+        try{
+            ResultSet rs = Connector.retrieveTransactionsData(this.currentUser); // The rs is equal to the function 'retrieveCarsData'
+            ResultSetMetaData stData = rs.getMetaData();
+            
+            q = stData.getColumnCount();
+            
+            DefaultTableModel RecordTable = (DefaultTableModel)jTable2.getModel();
+            RecordTable.setRowCount(0);
+            
+            while(rs.next()){ //rs.next() until the table is empty
+                Vector columnData = new Vector();
+                
+                for(i = 1 ; i <= q ; i++){
+                    
+                    // rs.getString is used to get column name from the table
+                    
+                    columnData.add(rs.getString("carplate"));
+                    columnData.add(rs.getString("date_rented"));
+                    columnData.add(rs.getString("date_returned"));
+                    columnData.add(rs.getString("payment"));
+                    columnData.add(rs.getString("expense"));
+                    columnData.add(rs.getString("net"));
+                    columnData.add(rs.getString("customername"));
+                    columnData.add(rs.getString("customernum"));
+                    
+                }
+                RecordTable.addRow(columnData);
+            }
+            
+            Connector.close();
+         }catch(SQLException e){
+              System.out.println(e.getMessage());
+         }
+    } 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,6 +112,9 @@ public class Homepage extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jPanel2 = new javax.swing.JPanel();
+        LblName = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        BTNlogout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -136,16 +177,24 @@ public class Homepage extends javax.swing.JFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Plate", "Date Rented", "Date Returned", "Income", "Expense", "Net profit", "Customer Name", "Customer Number"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable2);
+        if (jTable2.getColumnModel().getColumnCount() > 0) {
+            jTable2.getColumnModel().getColumn(0).setResizable(false);
+        }
 
         jTabbedPane1.addTab("Transactions", jScrollPane1);
 
@@ -164,22 +213,30 @@ public class Homepage extends javax.swing.JFrame {
 
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        LblName.setText("jLabel1");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(177, 177, 177)
+                .addComponent(LblName)
+                .addContainerGap(275, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 226, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(98, 98, 98)
+                .addComponent(LblName)
+                .addContainerGap(113, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -207,7 +264,7 @@ public class Homepage extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(BTNedit)
                                     .addComponent(BTNadd))
-                                .addGap(6, 6, 6))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(BTNaddtrans)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
@@ -217,20 +274,50 @@ public class Homepage extends javax.swing.JFrame {
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        BTNlogout.setText("Log-out");
+        BTNlogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNlogoutActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(BTNlogout)
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(BTNlogout)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -245,7 +332,7 @@ public class Homepage extends javax.swing.JFrame {
     }//GEN-LAST:event_BTNaddActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-
+        
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void BTNaddtransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNaddtransActionPerformed
@@ -253,6 +340,13 @@ public class Homepage extends javax.swing.JFrame {
         AddTransaction at = new AddTransaction(this);
         at.show();
     }//GEN-LAST:event_BTNaddtransActionPerformed
+
+    private void BTNlogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNlogoutActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        CarRental logIn = new CarRental();
+        logIn.show();
+    }//GEN-LAST:event_BTNlogoutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -288,9 +382,12 @@ public class Homepage extends javax.swing.JFrame {
     private javax.swing.JButton BTNadd;
     private javax.swing.JButton BTNaddtrans;
     private javax.swing.JButton BTNedit;
+    private javax.swing.JButton BTNlogout;
+    private javax.swing.JLabel LblName;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;

@@ -1,5 +1,4 @@
 package classes;
-import java.sql.*;
 import javax.swing.JOptionPane;
 
 public class AddCar extends javax.swing.JFrame {

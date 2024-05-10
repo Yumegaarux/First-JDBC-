@@ -40,7 +40,7 @@ public class AddTransaction extends javax.swing.JFrame {
         TFcustnum = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        BTNcancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -115,10 +115,20 @@ public class AddTransaction extends javax.swing.JFrame {
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 450, -1, -1));
 
         jButton2.setText("Clear");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 450, -1, -1));
 
-        jButton3.setText("Cancel");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 450, -1, -1));
+        BTNcancel.setText("Cancel");
+        BTNcancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNcancelActionPerformed(evt);
+            }
+        });
+        getContentPane().add(BTNcancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 450, -1, -1));
 
         pack();
         setLocationRelativeTo(null);
@@ -150,9 +160,16 @@ public class AddTransaction extends javax.swing.JFrame {
             String customerNum = TFcustnum.getText();
            
             int rowsInserted = Connector.AddTransaction(hp.getCurrentUser().getID(), car.getPlate(), dateRented, dateReturned, payment, expense, pickUp, dropOff, customerName, customerNum);
-            
             if (rowsInserted > 0){
                 JOptionPane.showMessageDialog(this, "Transaction Added Successfully!");
+                TFdaterented.setText("");
+                TFdatereturned.setText("");
+                TFpayment.setText("");
+                TFexpense.setText("");
+                TFpu.setText("");
+                TFdo.setText("");
+                TFcustname.setText("");
+                TFcustnum.setText("");
             }
             
             else{
@@ -164,6 +181,24 @@ public class AddTransaction extends javax.swing.JFrame {
         // Used rowsInserted since this is going to be queried in a table
        // Tables that are queried usually need to be int rather than just ResultSet
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void BTNcancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNcancelActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        hp.retrieveTransactions();
+        hp.show();
+    }//GEN-LAST:event_BTNcancelActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    TFdaterented.setText("");
+    TFdatereturned.setText("");
+    TFpayment.setText("");
+    TFexpense.setText("");
+    TFpu.setText("");
+    TFdo.setText("");
+    TFcustname.setText("");
+    TFcustnum.setText("");
+    }//GEN-LAST:event_jButton2ActionPerformed
     
     private void updateCombo(){
         try{
@@ -209,6 +244,7 @@ public class AddTransaction extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BTNcancel;
     private javax.swing.JComboBox<String> DBcar;
     private javax.swing.JTextField TFcustname;
     private javax.swing.JTextField TFcustnum;
@@ -221,7 +257,6 @@ public class AddTransaction extends javax.swing.JFrame {
     private javax.swing.JTextField TFpu;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
