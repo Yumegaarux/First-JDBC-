@@ -1,6 +1,7 @@
 package classes;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import java.util.Date;
 
 public class AddTransaction extends javax.swing.JFrame {
     private Homepage hp;
@@ -63,7 +64,7 @@ public class AddTransaction extends javax.swing.JFrame {
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setText("Date Returned:");
-        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 80, -1));
+        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 80, -1));
 
         jLabel5.setText("Date Rented:");
         jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 80, -1));
@@ -103,8 +104,14 @@ public class AddTransaction extends javax.swing.JFrame {
         jLabel13.setText("Customer Name:");
         jPanel4.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, -1, -1));
         jPanel4.add(TFcustnum, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 110, 180, -1));
-        jPanel4.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, 110, -1));
-        jPanel4.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 0, 110, -1));
+
+        jDateChooser1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateChooser1PropertyChange(evt);
+            }
+        });
+        jPanel4.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, 140, -1));
+        jPanel4.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 0, 150, -1));
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 580, 230));
 
@@ -156,8 +163,12 @@ public class AddTransaction extends javax.swing.JFrame {
             car.setName(carDetails[2]);
             car.setModel(Integer.parseInt(carDetails[3]));
             
-            String dateRented = jDateChooser1.getDateFormatString();
-            String dateReturned = jDateChooser2.getDateFormatString();
+            Date dateRented = jDateChooser1.getDate();
+            Date dateReturned = jDateChooser2.getDate();
+            
+            java.sql.Date sqlDateRented = new java.sql.Date(dateRented.getTime());
+            java.sql.Date sqlDateReturned = new java.sql.Date(dateReturned.getTime());
+            
             double payment = Double.parseDouble(TFpayment.getText());
             double expense = Double.parseDouble(TFexpense.getText());
             String pickUp = TFpu.getText();
@@ -165,7 +176,7 @@ public class AddTransaction extends javax.swing.JFrame {
             String customerName = TFcustname.getText();
             String customerNum = TFcustnum.getText();
            
-            int rowsInserted = Connector.AddTransaction(hp.getCurrentUser().getID(), car.getPlate(), dateRented, dateReturned, payment, expense, pickUp, dropOff, customerName, customerNum);
+            int rowsInserted = Connector.AddTransaction(hp.getCurrentUser().getID(), car.getPlate(), sqlDateRented, sqlDateReturned, payment, expense, pickUp, dropOff, customerName, customerNum);
             if (rowsInserted > 0){
                 JOptionPane.showMessageDialog(this, "Transaction Added Successfully!");
                 TFpayment.setText("");
@@ -205,6 +216,10 @@ public class AddTransaction extends javax.swing.JFrame {
     private void TFpuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFpuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TFpuActionPerformed
+
+    private void jDateChooser1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooser1PropertyChange
+        jDateChooser2.setMinSelectableDate(jDateChooser1.getDate());
+    }//GEN-LAST:event_jDateChooser1PropertyChange
     
     private void updateCombo(){
         try{
