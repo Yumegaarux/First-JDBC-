@@ -1,4 +1,5 @@
 package classes;
+import java.awt.Color;
 import java.sql.*;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
@@ -13,15 +14,20 @@ public class Homepage extends javax.swing.JFrame {
         initComponents();
         retrieveCars();           
         retrieveTransactions();
+        carNetDisplay();
+
                             // Adding connector to the constructor is bad.
                            // Functions can be added here so the moment the window is opened
                           // The Functions are now called.
     }
-    
     public Users getCurrentUser(){
         return currentUser;
     }
-    
+    public void carNetDisplay(){
+        TFcarNet.disable();
+        TFcarNet.setBackground(Color.white);
+        TFcarNet.setForeground(Color.black);
+    }
     public void retrieveCars(){
         int q, i;
         try{
@@ -220,19 +226,21 @@ public class Homepage extends javax.swing.JFrame {
 
         jLabel1.setText("Total Earnings: ");
 
+        TFcarNet.setEditable(false);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(LBLcarName, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(LBLcarName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(TFcarNet, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(266, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -348,16 +356,28 @@ public class Homepage extends javax.swing.JFrame {
         DefaultTableModel inventoryTable = (DefaultTableModel)jTable2.getModel();
         Car car = new Car();
         int selectedRow = jTable1.getSelectedRow();
-        
-        if (selectedRow >= 0){
+
+        Object plate = carTable.getValueAt(selectedRow, 0);
         Object brand = carTable.getValueAt(selectedRow, 1);
         Object name = carTable.getValueAt(selectedRow, 2);
         Object model = carTable.getValueAt(selectedRow, 3);
         
+        car.setPlate("" + plate);
         LBLcarName.setText("" + brand + " " + name + " " + model);
-        }
         
-        ResultSet rs = Connector.retrieveSum(car);
+        try{
+            ResultSet rs = Connector.retrieveSum(car.getPlate());
+        if (rs != null && rs.next()) {
+            double carNet = rs.getDouble("carNet");
+            TFcarNet.setText(String.valueOf(carNet));
+        } else {
+            TFcarNet.setText("0"); // or handle it as you need
+        }
+            
+        }
+        catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void BTNaddtransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNaddtransActionPerformed

@@ -38,7 +38,7 @@ public class CarRental extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SysWiz Car Rental");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setMinimumSize(new java.awt.Dimension(400, 300));
+        setMinimumSize(new java.awt.Dimension(400, 350));
         getContentPane().setLayout(null);
 
         jPanel3.setBackground(new java.awt.Color(0, 51, 51));
