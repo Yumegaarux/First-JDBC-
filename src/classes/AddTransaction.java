@@ -152,7 +152,6 @@ public class AddTransaction extends javax.swing.JFrame {
     }//GEN-LAST:event_DBcarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
         try{
             String selectedCar = (String) DBcar.getSelectedItem();
             String[] carDetails = selectedCar.split(" "); // Splits CONCAT by spaces
@@ -198,23 +197,22 @@ public class AddTransaction extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void BTNcancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNcancelActionPerformed
-        // TODO add your handling code here:
         this.dispose();
         hp.retrieveTransactions();
         hp.show();
     }//GEN-LAST:event_BTNcancelActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    TFpayment.setText("");
-    TFexpense.setText("");
-    TFpu.setText("");
-    TFdo.setText("");
-    TFcustname.setText("");
-    TFcustnum.setText("");
+        TFpayment.setText("");
+        TFexpense.setText("");
+        TFpu.setText("");
+        TFdo.setText("");
+        TFcustname.setText("");
+        TFcustnum.setText("");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void TFpuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFpuActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_TFpuActionPerformed
 
     private void jDateChooser1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooser1PropertyChange
@@ -238,7 +236,6 @@ public class AddTransaction extends javax.swing.JFrame {
     }
 
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -261,7 +258,6 @@ public class AddTransaction extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
