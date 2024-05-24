@@ -6,6 +6,7 @@ public class AddCar extends javax.swing.JFrame {
     public AddCar(Homepage hp) {
         initComponents();
         this.hp = hp;
+        jYearChooser1.setMaximum(2024);
     }
     
     @SuppressWarnings("unchecked")
@@ -18,13 +19,13 @@ public class AddCar extends javax.swing.JFrame {
         TFcarplate = new javax.swing.JTextField();
         TFcarbrand = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        TFcaryr = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         TFcarname = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         btnApply = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
+        jYearChooser1 = new com.toedter.calendar.JYearChooser();
 
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel4.setText("Car Name:");
@@ -63,6 +64,13 @@ public class AddCar extends javax.swing.JFrame {
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelActionPerformed(evt);
+            }
+        });
+
+        jYearChooser1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jYearChooser1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jYearChooser1PropertyChange(evt);
             }
         });
 
@@ -106,8 +114,8 @@ public class AddCar extends javax.swing.JFrame {
                                     .addComponent(TFcarbrand, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel5)
-                                .addGap(3, 3, 3)
-                                .addComponent(TFcaryr, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jYearChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(35, 35, 35))))
         );
         layout.setVerticalGroup(
@@ -116,16 +124,15 @@ public class AddCar extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TFcarplate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TFcarbrand, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(TFcarplate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TFcarbrand, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addGap(92, 92, 92))
+                    .addComponent(jYearChooser1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(TFcaryr, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(TFcarname, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel5)
                         .addComponent(jLabel3)))
@@ -145,7 +152,7 @@ public class AddCar extends javax.swing.JFrame {
             String carplate = TFcarplate.getText();
             String carbrand = TFcarbrand.getText();
             String carname = TFcarname.getText();
-            int yrmodel = Integer.parseInt(TFcaryr.getText());
+            int yrmodel = jYearChooser1.getYear();
             
             // hp.getCurrentUser().getID() allows us to know the currentUser we got from Homepage then later used the getID() to place the ID value 
             int rowsInserted = Connector.addCar(carplate, carbrand, carname, yrmodel, hp.getCurrentUser().getID());
@@ -154,7 +161,7 @@ public class AddCar extends javax.swing.JFrame {
                 TFcarplate.setText("");
                 TFcarbrand.setText("");
                 TFcarname.setText("");
-                TFcaryr.setText("");
+                jYearChooser1.setValue(2024);
                 JOptionPane.showMessageDialog(this, "Added to Inventory!");
             }
             else {
@@ -174,6 +181,10 @@ public class AddCar extends javax.swing.JFrame {
         hp.retrieveCars();
         hp.show();
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void jYearChooser1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jYearChooser1PropertyChange
+        
+    }//GEN-LAST:event_jYearChooser1PropertyChange
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -204,7 +215,6 @@ public class AddCar extends javax.swing.JFrame {
     private javax.swing.JTextField TFcarbrand;
     private javax.swing.JTextField TFcarname;
     private javax.swing.JTextField TFcarplate;
-    private javax.swing.JTextField TFcaryr;
     private javax.swing.JButton btnApply;
     private javax.swing.JButton btnCancel;
     private javax.swing.JLabel jLabel1;
@@ -214,5 +224,6 @@ public class AddCar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField jTextField4;
+    private com.toedter.calendar.JYearChooser jYearChooser1;
     // End of variables declaration//GEN-END:variables
 }
