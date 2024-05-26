@@ -1,13 +1,20 @@
 package classes;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import java.awt.event.KeyEvent;
 
 public class CarRental extends javax.swing.JFrame {  
 
     public CarRental() {
         initComponents();
     }
-
+    
+    public void keyPressed(java.awt.event.KeyEvent evt){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnLogActionPerformed(null);
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -81,6 +88,16 @@ public class CarRental extends javax.swing.JFrame {
 
         tfPass.setBackground(new java.awt.Color(0, 0, 51));
         tfPass.setForeground(new java.awt.Color(255, 255, 255));
+        tfPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfPassActionPerformed(evt);
+            }
+        });
+        tfPass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tfPassKeyPressed(evt);
+            }
+        });
         jPanel3.add(tfPass);
         tfPass.setBounds(90, 200, 270, 30);
 
@@ -180,6 +197,14 @@ public class CarRental extends javax.swing.JFrame {
     private void BTNcloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNcloseActionPerformed
         this.dispose();
     }//GEN-LAST:event_BTNcloseActionPerformed
+
+    private void tfPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPassActionPerformed
+        
+    }//GEN-LAST:event_tfPassActionPerformed
+
+    private void tfPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfPassKeyPressed
+        keyPressed(evt);
+    }//GEN-LAST:event_tfPassKeyPressed
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
