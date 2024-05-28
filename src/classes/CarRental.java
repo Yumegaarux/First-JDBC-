@@ -191,7 +191,7 @@ public class CarRental extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLogActionPerformed
 
     private void BTNcreateaccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNcreateaccActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_BTNcreateaccActionPerformed
 
     private void BTNcloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNcloseActionPerformed

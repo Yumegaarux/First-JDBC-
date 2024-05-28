@@ -4,15 +4,16 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class EditCar extends javax.swing.JFrame {
+    private String selectedDetail;
     private final Homepage hp;
     public EditCar(Homepage hp) {
         initComponents();
         this.hp = hp;
         updateCombo();
         tfEdit.setVisible(false);
-        jLabel2.setVisible(false);
+        jLabel2.setVisible(false);        
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -154,14 +155,26 @@ public class EditCar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     private void btnApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApplyActionPerformed
-            String selectedCar = (String) DBcar.getSelectedItem();
-            String[] carDetails = selectedCar.split(" "); // Splits CONCAT by spaces
-            
-            Car car = new Car();
-            car.setPlate(carDetails[0]);
-            car.setBrand(carDetails[1]);
-            car.setName(carDetails[2]);
-            car.setModel(Integer.parseInt(carDetails[3]));
+            try{
+                String selectedCar = (String) DBcar.getSelectedItem();
+                String[] carDetails = selectedCar.split(" "); // 
+                String editedDetail = tfEdit.getText();
+                selectedDetail = (String) dbDetail.getSelectedItem();
+                selectedDetail = checkDetail(selectedDetail);
+                System.out.println(selectedDetail);
+                Car car = new Car();
+                car.setPlate(carDetails[0]);
+                boolean updateSuccess = Connector.editCar(selectedDetail, editedDetail, car.getPlate());
+                
+                if(updateSuccess){
+                    JOptionPane.showMessageDialog(null, "Car Edited!");
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Please enter a valid input", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                }
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_btnApplyActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
@@ -175,11 +188,9 @@ public class EditCar extends javax.swing.JFrame {
     }//GEN-LAST:event_DBcarActionPerformed
 
     private void dbDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dbDetailActionPerformed
-        String selectedDetail = (String) dbDetail.getSelectedItem();
+        selectedDetail = (String) dbDetail.getSelectedItem();
         jLabel2.setText("Edit " + selectedDetail + ":");
-        
-        
-        
+
         if (!tfEdit.isVisible()){
             tfEdit.setVisible(true);
             jLabel2.setVisible(true);
@@ -192,14 +203,13 @@ public class EditCar extends javax.swing.JFrame {
             
             while(rs.next()){
                 DBcar.addItem(rs.getString("concated"));
-                // Used Concated so since you cannot manually concatinate
-                // The columns here
             }
             
             dbDetail.addItem("Plate");
             dbDetail.addItem("Brand");
             dbDetail.addItem("Name");
             dbDetail.addItem("Model");
+            
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }finally{
@@ -207,7 +217,23 @@ public class EditCar extends javax.swing.JFrame {
         }
     }
     
-    
+    private String checkDetail(String detail){
+        switch(detail){
+            case "Plate":
+                detail = "carplate";
+                break;
+            case "Brand":
+                detail = "carbrand";
+                break;
+            case "Name":
+                detail = "carname";
+                break;
+            case "Year Model":
+                detail = "yrmodel";
+                break;
+        }
+        return detail;
+    }
     
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
