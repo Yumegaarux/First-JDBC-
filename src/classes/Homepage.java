@@ -113,6 +113,8 @@ public class Homepage extends javax.swing.JFrame {
         LBLcarName = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         TFcarNet = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        TFcarBookings = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         BTNlogout = new javax.swing.JButton();
 
@@ -225,19 +227,33 @@ public class Homepage extends javax.swing.JFrame {
 
         TFcarNet.setEditable(false);
 
+        jLabel2.setText("Total Bookings: ");
+
+        TFcarBookings.setEditable(false);
+        TFcarBookings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TFcarBookingsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(LBLcarName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(LBLcarName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(TFcarNet, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TFcarNet, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(266, Short.MAX_VALUE))
+                        .addComponent(TFcarBookings, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -248,6 +264,10 @@ public class Homepage extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(TFcarNet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(TFcarBookings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -370,7 +390,15 @@ public class Homepage extends javax.swing.JFrame {
         } else {
             TFcarNet.setText("0"); // or handle it as you need
         }
-            
+        
+        rs = Connector.retrieveCount(car.getPlate());
+        if (rs != null && rs.next()) {
+            int rentCount = rs.getInt("rentals");
+            TFcarBookings.setText(String.valueOf(rentCount));
+        } else {
+            TFcarBookings.setText("0"); // or handle it as you need
+        }
+        
         }
         catch(SQLException e){
             System.out.println(e.getMessage());
@@ -394,6 +422,10 @@ public class Homepage extends javax.swing.JFrame {
         EditCar editcar = new EditCar(this);
         editcar.show();
     }//GEN-LAST:event_BTNeditActionPerformed
+
+    private void TFcarBookingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFcarBookingsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TFcarBookingsActionPerformed
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -426,9 +458,11 @@ public class Homepage extends javax.swing.JFrame {
     private javax.swing.JButton BTNedit;
     private javax.swing.JButton BTNlogout;
     private javax.swing.JLabel LBLcarName;
+    private javax.swing.JTextField TFcarBookings;
     private javax.swing.JTextField TFcarNet;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
