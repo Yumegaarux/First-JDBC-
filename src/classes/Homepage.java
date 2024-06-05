@@ -117,6 +117,7 @@ public class Homepage extends javax.swing.JFrame {
         TFcarBookings = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         BTNlogout = new javax.swing.JButton();
+        BTNstats = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -320,20 +321,31 @@ public class Homepage extends javax.swing.JFrame {
             }
         });
 
+        BTNstats.setText("Reporting");
+        BTNstats.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNstatsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(BTNlogout)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(BTNstats, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BTNlogout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(BTNlogout)
+                .addGap(18, 18, 18)
+                .addComponent(BTNstats)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -427,6 +439,10 @@ public class Homepage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TFcarBookingsActionPerformed
 
+    private void BTNstatsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNstatsActionPerformed
+        
+    }//GEN-LAST:event_BTNstatsActionPerformed
+
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -457,6 +473,7 @@ public class Homepage extends javax.swing.JFrame {
     private javax.swing.JButton BTNaddtrans;
     private javax.swing.JButton BTNedit;
     private javax.swing.JButton BTNlogout;
+    private javax.swing.JButton BTNstats;
     private javax.swing.JLabel LBLcarName;
     private javax.swing.JTextField TFcarBookings;
     private javax.swing.JTextField TFcarNet;
