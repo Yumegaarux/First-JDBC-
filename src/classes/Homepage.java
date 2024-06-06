@@ -118,11 +118,16 @@ public class Homepage extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         BTNlogout = new javax.swing.JButton();
         BTNstats = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(232, 232, 232));
+        setPreferredSize(new java.awt.Dimension(940, 550));
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        BTNadd.setBackground(new java.awt.Color(204, 51, 0));
         BTNadd.setText("Add Car");
         BTNadd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,6 +135,7 @@ public class Homepage extends javax.swing.JFrame {
             }
         });
 
+        BTNaddtrans.setBackground(new java.awt.Color(204, 51, 0));
         BTNaddtrans.setText("Add Transaction");
         BTNaddtrans.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,6 +143,7 @@ public class Homepage extends javax.swing.JFrame {
             }
         });
 
+        BTNedit.setBackground(new java.awt.Color(204, 51, 0));
         BTNedit.setText("Edit Car");
         BTNedit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,6 +151,11 @@ public class Homepage extends javax.swing.JFrame {
             }
         });
 
+        jTabbedPane1.setBackground(new java.awt.Color(204, 102, 0));
+        jTabbedPane1.setForeground(new java.awt.Color(255, 255, 255));
+
+        jTable1.setBackground(new java.awt.Color(255, 255, 255));
+        jTable1.setForeground(new java.awt.Color(0, 0, 0));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -183,6 +195,7 @@ public class Homepage extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Cars", jScrollPane2);
 
+        jTable2.setBackground(new java.awt.Color(255, 255, 255));
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -199,6 +212,7 @@ public class Homepage extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable2.setGridColor(new java.awt.Color(0, 0, 0));
         jScrollPane1.setViewportView(jTable2);
         if (jTable2.getColumnModel().getColumnCount() > 0) {
             jTable2.getColumnModel().getColumn(0).setResizable(false);
@@ -206,6 +220,8 @@ public class Homepage extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Transactions", jScrollPane1);
 
+        jInternalFrame1.setBackground(new java.awt.Color(255, 255, 255));
+        jInternalFrame1.setForeground(new java.awt.Color(255, 255, 255));
         jInternalFrame1.setVisible(true);
 
         javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
@@ -219,18 +235,27 @@ public class Homepage extends javax.swing.JFrame {
             .addGap(0, 171, Short.MAX_VALUE)
         );
 
+        jPanel2.setBackground(new java.awt.Color(246, 246, 246));
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        LBLcarName.setBackground(new java.awt.Color(0, 0, 0));
         LBLcarName.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        LBLcarName.setForeground(new java.awt.Color(0, 0, 0));
         LBLcarName.setText("Select Row");
 
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Total Earnings: ");
 
         TFcarNet.setEditable(false);
+        TFcarNet.setBackground(new java.awt.Color(255, 255, 255));
+        TFcarNet.setForeground(new java.awt.Color(0, 0, 0));
 
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Total Bookings: ");
 
         TFcarBookings.setEditable(false);
+        TFcarBookings.setBackground(new java.awt.Color(255, 255, 255));
+        TFcarBookings.setForeground(new java.awt.Color(0, 0, 0));
         TFcarBookings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TFcarBookingsActionPerformed(evt);
@@ -276,7 +301,7 @@ public class Homepage extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 806, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 806, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -312,8 +337,11 @@ public class Homepage extends javax.swing.JFrame {
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        jPanel3.setBackground(new java.awt.Color(204, 51, 0));
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        BTNlogout.setBackground(new java.awt.Color(255, 255, 255));
+        BTNlogout.setForeground(new java.awt.Color(0, 0, 0));
         BTNlogout.setText("Log-out");
         BTNlogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -321,6 +349,8 @@ public class Homepage extends javax.swing.JFrame {
             }
         });
 
+        BTNstats.setBackground(new java.awt.Color(255, 255, 255));
+        BTNstats.setForeground(new java.awt.Color(0, 0, 0));
         BTNstats.setText("Reporting");
         BTNstats.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -349,6 +379,20 @@ public class Homepage extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel4.setBackground(new java.awt.Color(243, 243, 243));
+        jPanel4.setPreferredSize(new java.awt.Dimension(948, 500));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 948, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 530, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -359,6 +403,8 @@ public class Homepage extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -368,6 +414,8 @@ public class Homepage extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE))
         );
 
         pack();
@@ -483,6 +531,7 @@ public class Homepage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;

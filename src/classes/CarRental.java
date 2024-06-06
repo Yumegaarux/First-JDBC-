@@ -48,19 +48,19 @@ public class CarRental extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(400, 350));
         getContentPane().setLayout(null);
 
-        jPanel3.setBackground(new java.awt.Color(0, 51, 51));
+        jPanel3.setBackground(new java.awt.Color(228, 228, 228));
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
         jPanel3.setMinimumSize(new java.awt.Dimension(400, 400));
         jPanel3.setPreferredSize(new java.awt.Dimension(400, 350));
         jPanel3.setLayout(null);
 
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Username");
         jPanel3.add(jLabel1);
         jLabel1.setBounds(20, 140, 70, 15);
 
-        tfUser.setBackground(new java.awt.Color(0, 0, 51));
-        tfUser.setForeground(new java.awt.Color(255, 255, 255));
+        tfUser.setBackground(new java.awt.Color(255, 255, 255));
+        tfUser.setForeground(new java.awt.Color(0, 0, 0));
         tfUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfUserActionPerformed(evt);
@@ -70,13 +70,13 @@ public class CarRental extends javax.swing.JFrame {
         tfUser.setBounds(90, 130, 269, 30);
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Password");
         jPanel3.add(jLabel2);
         jLabel2.setBounds(20, 210, 60, 15);
 
-        btnLog.setBackground(new java.awt.Color(0, 51, 102));
-        btnLog.setForeground(new java.awt.Color(255, 255, 255));
+        btnLog.setBackground(new java.awt.Color(255, 255, 255));
+        btnLog.setForeground(new java.awt.Color(0, 0, 0));
         btnLog.setText("Log-in");
         btnLog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,8 +86,8 @@ public class CarRental extends javax.swing.JFrame {
         jPanel3.add(btnLog);
         btnLog.setBounds(30, 270, 80, 25);
 
-        tfPass.setBackground(new java.awt.Color(0, 0, 51));
-        tfPass.setForeground(new java.awt.Color(255, 255, 255));
+        tfPass.setBackground(new java.awt.Color(255, 255, 255));
+        tfPass.setForeground(new java.awt.Color(0, 0, 0));
         tfPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfPassActionPerformed(evt);
@@ -101,7 +101,7 @@ public class CarRental extends javax.swing.JFrame {
         jPanel3.add(tfPass);
         tfPass.setBounds(90, 200, 270, 30);
 
-        jPanel1.setBackground(new java.awt.Color(0, 51, 153));
+        jPanel1.setBackground(new java.awt.Color(204, 51, 0));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
@@ -128,8 +128,8 @@ public class CarRental extends javax.swing.JFrame {
         jPanel3.add(jPanel1);
         jPanel1.setBounds(0, 0, 400, 70);
 
-        BTNcreateacc.setBackground(new java.awt.Color(0, 51, 102));
-        BTNcreateacc.setForeground(new java.awt.Color(255, 255, 255));
+        BTNcreateacc.setBackground(new java.awt.Color(255, 255, 255));
+        BTNcreateacc.setForeground(new java.awt.Color(0, 0, 0));
         BTNcreateacc.setText("Create Account");
         BTNcreateacc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,8 +139,8 @@ public class CarRental extends javax.swing.JFrame {
         jPanel3.add(BTNcreateacc);
         BTNcreateacc.setBounds(140, 270, 120, 25);
 
-        BTNclose.setBackground(new java.awt.Color(0, 51, 102));
-        BTNclose.setForeground(new java.awt.Color(255, 255, 255));
+        BTNclose.setBackground(new java.awt.Color(255, 255, 255));
+        BTNclose.setForeground(new java.awt.Color(0, 0, 0));
         BTNclose.setText("Close");
         BTNclose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
