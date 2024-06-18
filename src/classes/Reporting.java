@@ -1,10 +1,21 @@
 package classes;
 public class Reporting extends javax.swing.JFrame {
-
-    public Reporting() {
+    private final Users currentUser;
+    public Reporting(Users user) {
+        this.currentUser = user;
         initComponents();
     }
-
+    
+ //   public void reporting(){
+  //      try{
+   //         ResultSet rs = Connector.rentReport(currentUser);
+            
+            
+    //    }catch(SQLException e){
+     //       System.out.println(e.getMessage());
+    //    }
+  //  }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -33,6 +44,7 @@ public class Reporting extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(204, 0, 0));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Monthly Report");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -84,6 +96,11 @@ public class Reporting extends javax.swing.JFrame {
         jTextField4.setBounds(130, 220, 160, 40);
 
         jButton1.setText("Close");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton1);
         jButton1.setBounds(210, 450, 61, 25);
 
@@ -93,6 +110,8 @@ public class Reporting extends javax.swing.JFrame {
         jLabel6.setBounds(10, 290, 120, 19);
         jPanel1.add(jTextField5);
         jTextField5.setBounds(130, 280, 160, 40);
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -121,6 +140,10 @@ public class Reporting extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

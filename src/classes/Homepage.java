@@ -488,7 +488,8 @@ public class Homepage extends javax.swing.JFrame {
     }//GEN-LAST:event_TFcarBookingsActionPerformed
 
     private void BTNstatsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNstatsActionPerformed
-        
+        Reporting reporting = new Reporting(currentUser);
+        reporting.show();
     }//GEN-LAST:event_BTNstatsActionPerformed
 
     public static void main(String args[]) {
