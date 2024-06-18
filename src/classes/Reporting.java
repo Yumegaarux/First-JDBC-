@@ -1,20 +1,23 @@
 package classes;
+import java.sql.*;
 public class Reporting extends javax.swing.JFrame {
     private final Users currentUser;
     public Reporting(Users user) {
         this.currentUser = user;
         initComponents();
+        reporting();
     }
     
- //   public void reporting(){
-  //      try{
-   //         ResultSet rs = Connector.rentReport(currentUser);
+   public void reporting(){
+        try{
+            Connector.connect();
+            ResultSet rs = Connector.rentReport(currentUser);
+            TFrents.setText(""+rs.getString("rentals"));
             
-            
-    //    }catch(SQLException e){
-     //       System.out.println(e.getMessage());
-    //    }
-  //  }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+       }
+  }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -26,7 +29,7 @@ public class Reporting extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        TFrents = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -78,8 +81,8 @@ public class Reporting extends javax.swing.JFrame {
         jLabel3.setText("Total Rents:");
         jPanel1.add(jLabel3);
         jLabel3.setBounds(10, 110, 90, 19);
-        jPanel1.add(jTextField2);
-        jTextField2.setBounds(130, 100, 160, 40);
+        jPanel1.add(TFrents);
+        TFrents.setBounds(130, 100, 160, 40);
 
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel4.setText("Total Earnings: ");
@@ -172,6 +175,7 @@ public class Reporting extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField TFrents;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -183,7 +187,6 @@ public class Reporting extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
