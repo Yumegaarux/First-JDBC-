@@ -11,8 +11,16 @@ public class Reporting extends javax.swing.JFrame {
    public void reporting(){
         try{
             Connector.connect();
-            ResultSet rs = Connector.rentReport(currentUser);
-            TFrents.setText(""+rs.getString("rentals"));
+            ResultSet rs1 = Connector.rentReport(currentUser);
+            ResultSet rs2 = Connector.rentedCarsReport(currentUser);
+            
+            if(rs1.next() && rs2.next()){
+                TFrents.setText(rs1.getString("rentals"));
+                TFearnings.setText(rs1.getString("earnings"));
+                TFexpense.setText(rs1.getString("expenses"));
+                
+                TFmostRented.setText(rs2.getString("carplate"));
+            }
             
         }catch(SQLException e){
             System.out.println(e.getMessage());
@@ -27,16 +35,16 @@ public class Reporting extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        TFleastRented = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         TFrents = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        TFearnings = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        TFexpense = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        TFmostRented = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -74,13 +82,17 @@ public class Reporting extends javax.swing.JFrame {
         jLabel2.setText("Least Rented Car:");
         jPanel1.add(jLabel2);
         jLabel2.setBounds(10, 350, 120, 19);
-        jPanel1.add(jTextField1);
-        jTextField1.setBounds(130, 340, 160, 40);
+
+        TFleastRented.setEditable(false);
+        jPanel1.add(TFleastRented);
+        TFleastRented.setBounds(130, 340, 160, 40);
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel3.setText("Total Rents:");
         jPanel1.add(jLabel3);
         jLabel3.setBounds(10, 110, 90, 19);
+
+        TFrents.setEditable(false);
         jPanel1.add(TFrents);
         TFrents.setBounds(130, 100, 160, 40);
 
@@ -88,15 +100,19 @@ public class Reporting extends javax.swing.JFrame {
         jLabel4.setText("Total Earnings: ");
         jPanel1.add(jLabel4);
         jLabel4.setBounds(10, 170, 100, 19);
-        jPanel1.add(jTextField3);
-        jTextField3.setBounds(130, 160, 160, 40);
+
+        TFearnings.setEditable(false);
+        jPanel1.add(TFearnings);
+        TFearnings.setBounds(130, 160, 160, 40);
 
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel5.setText("Total Expense: ");
         jPanel1.add(jLabel5);
         jLabel5.setBounds(10, 230, 100, 19);
-        jPanel1.add(jTextField4);
-        jTextField4.setBounds(130, 220, 160, 40);
+
+        TFexpense.setEditable(false);
+        jPanel1.add(TFexpense);
+        TFexpense.setBounds(130, 220, 160, 40);
 
         jButton1.setText("Close");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -111,8 +127,10 @@ public class Reporting extends javax.swing.JFrame {
         jLabel6.setText("Most Rented Car:");
         jPanel1.add(jLabel6);
         jLabel6.setBounds(10, 290, 120, 19);
-        jPanel1.add(jTextField5);
-        jTextField5.setBounds(130, 280, 160, 40);
+
+        TFmostRented.setEditable(false);
+        jPanel1.add(TFmostRented);
+        TFmostRented.setBounds(130, 280, 160, 40);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -175,6 +193,10 @@ public class Reporting extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField TFearnings;
+    private javax.swing.JTextField TFexpense;
+    private javax.swing.JTextField TFleastRented;
+    private javax.swing.JTextField TFmostRented;
     private javax.swing.JTextField TFrents;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -186,9 +208,5 @@ public class Reporting extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
 }
