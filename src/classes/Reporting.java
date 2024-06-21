@@ -10,18 +10,20 @@ public class Reporting extends javax.swing.JFrame {
     
    public void reporting(){
         try{
-            Connector.connect();
             ResultSet rs1 = Connector.rentReport(currentUser);
-            ResultSet rs2 = Connector.rentedCarsReport(currentUser);
+            ResultSet rs2 = Connector.mostRented(currentUser);
+            ResultSet rs3 = Connector.leastRented(currentUser);
             
-            if(rs1.next() && rs2.next()){
+            if(rs1.next() && rs2.next() && rs3.next()){
                 TFrents.setText(rs1.getString("rentals"));
                 TFearnings.setText(rs1.getString("earnings"));
                 TFexpense.setText(rs1.getString("expenses"));
                 
                 TFmostRented.setText(rs2.getString("carplate"));
+                TFleastRented.setText(rs3.getString("carplate"));
             }
             
+            Connector.close();
         }catch(SQLException e){
             System.out.println(e.getMessage());
        }
