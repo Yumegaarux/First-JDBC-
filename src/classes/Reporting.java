@@ -8,7 +8,7 @@ public class Reporting extends javax.swing.JFrame {
         reporting();
     }
     
-   public void reporting(){
+   private void reporting(){
         try{
             ResultSet rs1 = Connector.rentReport(currentUser);
             ResultSet rs2 = Connector.mostRented(currentUser);
