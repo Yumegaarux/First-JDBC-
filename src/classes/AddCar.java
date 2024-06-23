@@ -7,6 +7,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class AddCar extends javax.swing.JFrame {
     private final Homepage hp;
+    private File imageFile;
+    private FileInputStream inputStream;
+    
     public AddCar(Homepage hp) {
         initComponents();
         this.hp = hp;
@@ -211,7 +214,7 @@ public class AddCar extends javax.swing.JFrame {
             int yrmodel = jYearChooser1.getYear();
             
             // hp.getCurrentUser().getID() allows us to know the currentUser we got from Homepage then later used the getID() to place the ID value 
-            int rowsInserted = Connector.addCar(carplate, carbrand, carname, yrmodel, hp.getCurrentUser().getID());
+            int rowsInserted = Connector.addCar(carplate, carbrand, carname, yrmodel, hp.getCurrentUser().getID(),inputStream ,imageFile.getAbsolutePath());
                
             if (rowsInserted > 0) {
                 TFcarplate.setText("");
@@ -244,8 +247,8 @@ public class AddCar extends javax.swing.JFrame {
 
     private void BTNimgSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNimgSelectActionPerformed
         try{
-            File imageFile = getImg();  
-            FileInputStream inputStream = new FileInputStream(imageFile);    
+            imageFile = getImg();  
+            inputStream = new FileInputStream(imageFile);   
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
