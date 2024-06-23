@@ -21,15 +21,15 @@ public class AddCar extends javax.swing.JFrame {
         
         JFileChooser fileChooser = new JFileChooser();
         FileNameExtensionFilter imageFilter = new FileNameExtensionFilter(
-        "Image files", "jpg", "png", "bmp", "jpeg");
+        "Image files", "jpg", "png", "bmp", "jpeg"); // Picks what files to show
         
-        fileChooser.setFileFilter(imageFilter);
-        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter(imageFilter); // is Passed on to fileFilter.
+        fileChooser.setAcceptAllFileFilterUsed(false); // Will not allow the option to see all files.
         
         int img = fileChooser.showOpenDialog(jPanel1);
         
         if(img == JFileChooser.APPROVE_OPTION){
-            selectedFile = fileChooser.getSelectedFile();
+            selectedFile = fileChooser.getSelectedFile(); 
         }else{
             JOptionPane.showMessageDialog(null, "You did not select a valid file", "Invalid File Selection", JOptionPane.ERROR_MESSAGE);
         }

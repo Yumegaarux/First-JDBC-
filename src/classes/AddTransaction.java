@@ -113,8 +113,8 @@ public class AddTransaction extends javax.swing.JFrame {
         jPanel4.add(TFpu, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 120, -1));
 
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel12.setText("Customer Age:");
-        jPanel4.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, -1, -1));
+        jLabel12.setText("Customer Contact:");
+        jPanel4.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 110, -1, -1));
         jPanel4.add(TFcustname, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 70, 180, -1));
 
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));

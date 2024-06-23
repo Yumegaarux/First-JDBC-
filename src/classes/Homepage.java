@@ -1,7 +1,14 @@
 package classes;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.Vector;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
 public class Homepage extends javax.swing.JFrame {
@@ -20,11 +27,13 @@ public class Homepage extends javax.swing.JFrame {
     public Users getCurrentUser(){
         return currentUser;
     }
+    
     private void carNetDisplay(){
         TFcarNet.disable();
         TFcarNet.setBackground(Color.white);
         TFcarNet.setForeground(Color.black);
     }
+    
     public void retrieveCars(){
         int q, i;
         try{
@@ -94,7 +103,20 @@ public class Homepage extends javax.swing.JFrame {
               System.out.println(e.getMessage());
          }
     } 
-
+    
+    public void displayImage(String carPlate){
+        ResultSet rs = Connector.retrieveImage(carPlate);
+        try{
+            String path = rs.getString("car_image_path");
+            BufferedImage bi = ImageIO.read(new File(path));
+            Image img  = bi.getScaledInstance(251, 147, Image.SCALE_SMOOTH);
+            ImageIcon icon = new ImageIcon(img);
+            LBLcarImg.setIcon(icon);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -449,21 +471,22 @@ public class Homepage extends javax.swing.JFrame {
         
         try{
             ResultSet rs = Connector.retrieveSum(car.getPlate());
-        if (rs != null && rs.next()) {
-            double carNet = rs.getDouble("carNet");
-            TFcarNet.setText(String.valueOf(carNet));
-        } else {
-            TFcarNet.setText("0"); // or handle it as you need
-        }
-        
-        rs = Connector.retrieveCount(car.getPlate());
-        if (rs != null && rs.next()) {
-            int rentCount = rs.getInt("rentals");
-            TFcarBookings.setText(String.valueOf(rentCount));
-        } else {
-            TFcarBookings.setText("0"); // or handle it as you need
-        }
-        
+            if (rs != null && rs.next()) {
+                double carNet = rs.getDouble("carNet");
+                TFcarNet.setText(String.valueOf(carNet));
+            } else {
+                TFcarNet.setText("0"); // or handle it as you need
+            }
+
+            rs = Connector.retrieveCount(car.getPlate());
+            if (rs != null && rs.next()) {
+                int rentCount = rs.getInt("rentals");
+                TFcarBookings.setText(String.valueOf(rentCount));
+            } else {
+                TFcarBookings.setText("0"); // or handle it as you need
+            }
+            displayImage(car.getPlate());
+            Connector.close();
         }
         catch(SQLException e){
             System.out.println(e.getMessage());
