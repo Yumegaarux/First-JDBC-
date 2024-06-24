@@ -1,13 +1,10 @@
 package classes;
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.util.Vector;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,6 +16,7 @@ public class Homepage extends javax.swing.JFrame {
         retrieveCars();           
         retrieveTransactions();
         carNetDisplay();
+
 
                             // Adding connector to the constructor is bad.
                            // Functions can be added here so the moment the window is opened
@@ -108,10 +106,15 @@ public class Homepage extends javax.swing.JFrame {
         ResultSet rs = Connector.retrieveImage(carPlate);
         try{
             String path = rs.getString("car_image_path");
-            BufferedImage bi = ImageIO.read(new File(path));
-            Image img  = bi.getScaledInstance(251, 147, Image.SCALE_SMOOTH);
-            ImageIcon icon = new ImageIcon(img);
-            LBLcarImg.setIcon(icon);
+            if (rs.next()){
+                byte[] img = rs.getBytes("car_image");
+                ImageIcon image = new ImageIcon(img);
+                Image im = image.getImage();
+                Image myImg = im.getScaledInstance(LBLcarImg.getWidth(), LBLcarImg.getHeight(), Image.SCALE_SMOOTH);
+                ImageIcon newImage = new ImageIcon(myImg);
+                LBLcarImg.setIcon(newImage);
+            }
+                System.out.println("" + path);
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
@@ -269,14 +272,14 @@ public class Homepage extends javax.swing.JFrame {
             jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jInternalFrame1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(LBLcarImg, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+                .addComponent(LBLcarImg, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jInternalFrame1Layout.setVerticalGroup(
             jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jInternalFrame1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(LBLcarImg, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                .addComponent(LBLcarImg, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -469,15 +472,20 @@ public class Homepage extends javax.swing.JFrame {
         car.setPlate("" + plate);
         LBLcarName.setText("" + brand + " " + name + " " + model);
         
+        ResultSet rs = null;
+        
         try{
-            ResultSet rs = Connector.retrieveSum(car.getPlate());
+            rs = Connector.retrieveSum(car.getPlate());
             if (rs != null && rs.next()) {
+                displayImage(car.getPlate());
                 double carNet = rs.getDouble("carNet");
                 TFcarNet.setText(String.valueOf(carNet));
             } else {
                 TFcarNet.setText("0"); // or handle it as you need
             }
-
+            
+            rs.close();
+            
             rs = Connector.retrieveCount(car.getPlate());
             if (rs != null && rs.next()) {
                 int rentCount = rs.getInt("rentals");
@@ -485,12 +493,31 @@ public class Homepage extends javax.swing.JFrame {
             } else {
                 TFcarBookings.setText("0"); // or handle it as you need
             }
-            displayImage(car.getPlate());
+            
+            rs.close();
+            
+            rs = Connector.retrieveImage(car.getPlate());
+            if(rs != null && rs.next()){
+                String path = rs.getString("car_image_path");
+                Blob image = rs.getBlob("car_image");
+                byte[] bytes = image.getBytes(1, (int) image.length());
+                
+                try(FileOutputStream fos = new FileOutputStream(path)){
+                    fos.write(bytes);
+                }catch(IOException e){
+                    System.out.println(e.getMessage());
+                } 
+                ImageIcon icon = new ImageIcon(bytes);
+                Image img = icon.getImage().getScaledInstance(251, 147, Image.SCALE_SMOOTH);
+                LBLcarImg.setIcon(new ImageIcon(img));
+                
+            }
+            
             Connector.close();
         }
         catch(SQLException e){
             System.out.println(e.getMessage());
-        }
+        } 
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void BTNaddtransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNaddtransActionPerformed
