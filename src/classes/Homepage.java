@@ -102,24 +102,6 @@ public class Homepage extends javax.swing.JFrame {
          }
     } 
     
-    public void displayImage(String carPlate){
-        ResultSet rs = Connector.retrieveImage(carPlate);
-        try{
-            String path = rs.getString("car_image_path");
-            if (rs.next()){
-                byte[] img = rs.getBytes("car_image");
-                ImageIcon image = new ImageIcon(img);
-                Image im = image.getImage();
-                Image myImg = im.getScaledInstance(LBLcarImg.getWidth(), LBLcarImg.getHeight(), Image.SCALE_SMOOTH);
-                ImageIcon newImage = new ImageIcon(myImg);
-                LBLcarImg.setIcon(newImage);
-            }
-                System.out.println("" + path);
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -477,7 +459,6 @@ public class Homepage extends javax.swing.JFrame {
         try{
             rs = Connector.retrieveSum(car.getPlate());
             if (rs != null && rs.next()) {
-                displayImage(car.getPlate());
                 double carNet = rs.getDouble("carNet");
                 TFcarNet.setText(String.valueOf(carNet));
             } else {
@@ -500,19 +481,22 @@ public class Homepage extends javax.swing.JFrame {
             if(rs != null && rs.next()){
                 String path = rs.getString("car_image_path");
                 Blob image = rs.getBlob("car_image");
-                byte[] bytes = image.getBytes(1, (int) image.length());
-                
-                try(FileOutputStream fos = new FileOutputStream(path)){
-                    fos.write(bytes);
-                }catch(IOException e){
-                    System.out.println(e.getMessage());
-                } 
-                ImageIcon icon = new ImageIcon(bytes);
-                Image img = icon.getImage().getScaledInstance(251, 147, Image.SCALE_SMOOTH);
-                LBLcarImg.setIcon(new ImageIcon(img));
-                
+                if (image != null && path != null){
+                    byte[] bytes = image.getBytes(1, (int) image.length());
+
+                    try(FileOutputStream fos = new FileOutputStream(path)){
+                        fos.write(bytes);
+                    }catch(IOException e){
+                        System.out.println(e.getMessage());
+                    }
+                    
+                    ImageIcon icon = new ImageIcon(bytes);
+                    Image img = icon.getImage().getScaledInstance(251, 147, Image.SCALE_SMOOTH);
+                    LBLcarImg.setIcon(new ImageIcon(img));
+                }else{
+                    LBLcarImg.setIcon(null);
+                }
             }
-            
             Connector.close();
         }
         catch(SQLException e){
