@@ -506,8 +506,8 @@ public class Homepage extends javax.swing.JFrame {
 
     private void BTNaddtransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNaddtransActionPerformed
         this.dispose();
-        AddTransaction at = new AddTransaction(this);
-        at.show();
+        SelectTransaction st = new SelectTransaction(currentUser);
+        st.show();
     }//GEN-LAST:event_BTNaddtransActionPerformed
 
     private void BTNlogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNlogoutActionPerformed
