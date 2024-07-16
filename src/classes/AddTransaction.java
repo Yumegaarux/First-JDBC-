@@ -4,9 +4,9 @@ import javax.swing.JOptionPane;
 import java.util.Date;
 
 public class AddTransaction extends javax.swing.JFrame {
-    private Homepage hp;
-    public AddTransaction(Homepage hp) {
-        this.hp = hp;
+    private final Users currentUser;
+    public AddTransaction(Users currentUser) {
+        this.currentUser = currentUser;
         initComponents();
         updateCombo(); // DropBox is updated by function not by button
     }
@@ -213,9 +213,9 @@ public class AddTransaction extends javax.swing.JFrame {
     }//GEN-LAST:event_jDateChooser1PropertyChange
 
     private void BTNcancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNcancelActionPerformed
+        SelectTransaction st = new SelectTransaction(currentUser);
+        st.show();
         this.dispose();
-        hp.retrieveTransactions();
-        hp.show();
     }//GEN-LAST:event_BTNcancelActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -251,7 +251,7 @@ public class AddTransaction extends javax.swing.JFrame {
             String customerName = TFcustname.getText();
             String customerNum = TFcustnum.getText();
 
-            int rowsInserted = Connector.AddTransaction(hp.getCurrentUser().getID(), car.getPlate(), sqlDateRented, sqlDateReturned, payment, expense, pickUp, dropOff, customerName, customerNum);
+            int rowsInserted = Connector.AddTransaction(currentUser.getID(), car.getPlate(), sqlDateRented, sqlDateReturned, payment, expense, pickUp, dropOff, customerName, customerNum);
             if (rowsInserted > 0){
                 JOptionPane.showMessageDialog(this, "Transaction Added Successfully!");
                 TFpayment.setText("");
@@ -274,7 +274,7 @@ public class AddTransaction extends javax.swing.JFrame {
     
     private void updateCombo(){
         try{
-            ResultSet rs = Connector.comboUpdate(hp.getCurrentUser());
+            ResultSet rs = Connector.comboUpdate(currentUser);
             
             while(rs.next()){
                 DBcar.addItem(rs.getString("concated"));
